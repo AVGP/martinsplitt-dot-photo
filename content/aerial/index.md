@@ -1,5 +1,5 @@
 ---
-title: Aerial photography by Martin Splitt
+title: Aerial photography
 description: The world through the eye of a flying camera offers new perspectives and exciting insights.
 menus: "main"
 resources:
