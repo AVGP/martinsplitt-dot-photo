@@ -9,6 +9,8 @@ resources:
       cover: true
   - src: blausee/blausee-winter-mood.jpg
     title: Blausee in the snow, lit up with lots of fairy lights - trees, lights and huts reflecting in the calm water of the lake.
+  - src: flowers-by-the-lake.jpg
+    title: Beautiful flowers on a sunny spring day, with the glistening water of Lake Lucerne and the still snow-capped mountain tops of the Alps in the back.
   - src: old-toll-bridge-rheinau.jpg
     title: The old wooden toll bridge spanning the rhine river at Rheinau during a calm, sunny day.
   - src: elderly-couple-at-lake.jpg
