@@ -13,6 +13,8 @@ resources:
     title: The ruins of the former castle "Altburg" in Regensdorf, Switzerland are the last few reminders of a once-great noble family.
   - src: churfisten-mountains.jpg
     title: The Churfürsten mountain range stands tall at Walensee. It's rugged, steep rock walls reaching for the sky as the sun sets.
+  - src: hoengger-wehr-zurich.jpg
+    title: The weir controlling the intake for the hydroelectric powerplant and marking the beginning of the Werdinsel island in the Limmat river.
   - src: industrial-building-and-roads.jpg
     title: The Heizenholz incineration plant amidst the road bridges of the highways encircling Zurich.
   - src: walensee-sunset.jpg
