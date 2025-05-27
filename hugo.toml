@@ -13,6 +13,7 @@ timeout = "120"
         name = "Martin Splitt"
     [params.socialIcons]
         instagram = "https://instagram.com/the_splitti"
+        500px = "https://500px.com/p/splitti"
 
 [module]
   [[module.imports]]
