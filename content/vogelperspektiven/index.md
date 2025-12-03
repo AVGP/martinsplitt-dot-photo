@@ -21,4 +21,6 @@ resources:
     title: Das Höngger Wehr von oben
   - src: zurich-oldtown-aerial.jpg
     title: Die Zürcher Altstadt im Überflug
+  - src: misty-hills.jpg
+    title: Nebel zieht durch die Täler und über die Hügel
 ---
