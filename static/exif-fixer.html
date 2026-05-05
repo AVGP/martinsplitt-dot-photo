@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fix EXIF data</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, Helvetica, sans-serif;
+      }
+
+      input, label, button {
+        margin: 0.25em;
+        display: block;
+        width: 100%;
+      }
+      
+      form {
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <script>
+      const API_ENDPOINT = 'https://edit-exif-711231798250.europe-west6.run.app';
+      function fixExif() {
+        const form = document.forms[0];
+        // Calls API endpoint for each image individually, then clicks a download link to download the file.
+        var photos = Array.from(form.photos.files);
+        photos.forEach(async (photo) => {
+          const fd = new FormData();
+          fd.append('cam_brand', form.cam_brand.value);
+          fd.append('cam_model', form.cam_model.value);
+          fd.append('film', form.film.value);
+          fd.append('iso', form.iso.value);
+          fd.append('date_taken', form.date_taken.value);
+          fd.append('photo', photo);
+          const fixedImgBlob = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            body: fd
+          }).then(r => r.blob());
+          const link = document.createElement('a');
+          link.setAttribute('download', photo.name);
+          link.href = URL.createObjectURL(fixedImgBlob);
+          link.click();
+//          document.body.appendChild(img);
+        });
+        return false;
+      }
+    </script>
+  </head>
+  <body>
+    <form action="javascript:fixExif()">
+      <label>
+        Camera brand:
+        <input name="cam_brand">
+      </label>
+      <label>
+        Camera model:
+        <input name="cam_model">
+      </label>
+      <label>
+        Film stock:
+        <input name="film">
+      </label>
+      <label>
+        Film ISO:
+        <input type="number" name="iso">
+      </label>
+      <label>
+        Date taken:
+        <input type="date" name="date_taken">
+      </label>
+      <label>
+        Photos:
+        <input type="file" multiple name="photos">
+      </label>
+      <button>Fix EXIF</button>
+    </form>
+  </body>
+</html>
