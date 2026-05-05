@@ -43,9 +43,10 @@
           }).then(r => r.blob());
           const link = document.createElement('a');
           link.setAttribute('download', photo.name);
+          link.textContent = photo.name;
           link.href = URL.createObjectURL(fixedImgBlob);
           link.click();
-//          document.body.appendChild(img);
+          document.body.appendChild(link);
         });
         return false;
       }
