@@ -25,7 +25,11 @@
     </style>
     <script>
       const API_ENDPOINT = 'https://edit-exif-711231798250.europe-west6.run.app';
+      const list = document.createElement('ul');
+      document.body.appendChild(list);
+      
       function fixExif() {
+        list.innerHTML = '';
         const form = document.forms[0];
         // Calls API endpoint for each image individually, then clicks a download link to download the file.
         var photos = Array.from(form.photos.files);
@@ -46,7 +50,9 @@
           link.textContent = photo.name;
           link.href = URL.createObjectURL(fixedImgBlob);
           link.click();
-          document.body.appendChild(link);
+          const li = document.createElement('li');
+          li.appendChild(link);
+          document.body.appendChild(li);
         });
         return false;
       }
@@ -80,5 +86,6 @@
       </label>
       <button>Fix EXIF</button>
     </form>
+    <ul></ul>
   </body>
 </html>
