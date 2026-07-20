@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if title %}{{ title }} — Martin Splitt Photography{% else %}Martin Splitt Photography — Portfolio{% endif %}</title>
+  <meta name="description" content="Landscape, aerial and underwater photography portfolio by Martin Splitt.">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+</head>
+<body>
+
+  <header class="header-container">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94"/><path d="M9.69 8h11.48"/><path d="M7.38 12l5.74-9.94"/><path d="M9.69 16L3.95 6.06"/><path d="M14.31 16H2.83"/><path d="M16.62 12l-5.74 9.94"/></svg>
+        Martin Splitt
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link {% if page.url == '/' %}active{% endif %}">Portfolio</a></li>
+          <li><a href="/about/" class="nav-link {% if page.url == '/about/' %}active{% endif %}">About</a></li>
+          <li><a href="/links/" class="nav-link {% if page.url == '/links/' %}active{% endif %}">Links</a></li>
+          <li><a href="/exif-fixer/" class="exif-tool-btn">EXIF Fixer Tool</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    {{ content | safe }}
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>&copy; {{ page.date.getFullYear() if page.date else 2026 }} Martin Splitt Photography. All rights reserved.</p>
+      <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.82rem;">Specialising in landscapes, aerial, and underwater photography | <a href="/links/">Links</a> | <a href="/exif-fixer/">Fix EXIF Tool</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

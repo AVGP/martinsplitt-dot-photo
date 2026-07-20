@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fix EXIF data - Martin Splitt Photography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+        margin: 0;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #f8fafc;
+      }
+
+      p.sub {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+      
+      form {
+        width: 100%;
+        max-width: 480px;
+        background: #1e293b;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        border: 1px solid #334155;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 1.25rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #cbd5e1;
+      }
+
+      input {
+        margin-top: 0.4rem;
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: #0f172a;
+        border: 1px solid #475569;
+        border-radius: 6px;
+        color: #f8fafc;
+        font-size: 0.95rem;
+        transition: border-color 0.2s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #38bdf8;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.85rem;
+        margin-top: 1rem;
+        background-color: #38bdf8;
+        color: #0f172a;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+      }
+
+      button:hover {
+        background-color: #7dd3fc;
+      }
+
+      button:active {
+        transform: scale(0.99);
+      }
+
+      ul#results {
+        margin-top: 1.5rem;
+        padding-left: 0;
+        list-style: none;
+        width: 100%;
+        max-width: 480px;
+      }
+
+      ul#results li {
+        margin-bottom: 0.5rem;
+      }
+
+      ul#results a {
+        display: block;
+        padding: 0.75rem 1rem;
+        background: #1e293b;
+        color: #38bdf8;
+        text-decoration: none;
+        border-radius: 6px;
+        border: 1px solid #334155;
+        font-size: 0.9rem;
+        word-break: break-all;
+      }
+
+      ul#results a:hover {
+        background: #334155;
+      }
+
+      .nav-back {
+        margin-bottom: 1.5rem;
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .nav-back:hover {
+        color: #38bdf8;
+      }
+    </style>
+    <script>
+      const API_ENDPOINT = 'https://edit-exif-711231798250.europe-west6.run.app';
+      
+      function fixExif() {
+        const list = document.getElementById('results');
+        list.innerHTML = '';
+        const form = document.forms[0];
+        var photos = Array.from(form.photos.files);
+        if (photos.length === 0) {
+          alert('Please select at least one photo.');
+          return false;
+        }
+        photos.forEach(async (photo) => {
+          const fd = new FormData();
+          fd.append('cam_brand', form.cam_brand.value);
+          fd.append('cam_model', form.cam_model.value);
+          fd.append('film', form.film.value);
+          fd.append('iso', form.iso.value);
+          fd.append('date_taken', form.date_taken.value);
+          fd.append('photo', photo);
+          try {
+            const fixedImgBlob = await fetch(API_ENDPOINT, {
+              method: 'POST',
+              body: fd
+            }).then(r => r.blob());
+            const link = document.createElement('a');
+            link.setAttribute('download', photo.name);
+            link.textContent = 'Download ' + photo.name;
+            link.href = URL.createObjectURL(fixedImgBlob);
+            link.click();
+            const li = document.createElement('li');
+            li.appendChild(link);
+            list.appendChild(li);
+          } catch (err) {
+            console.error(err);
+            alert('Failed to fix EXIF for ' + photo.name);
+          }
+        });
+        return false;
+      }
+    </script>
+  </head>
+  <body>
+    <a href="/" class="nav-back">&larr; Back to Portfolio</a>
+    <header>
+      <h1>Fix EXIF Data</h1>
+      <p class="sub">Batch edit EXIF metadata for analog or digital photos</p>
+    </header>
+    <form action="javascript:fixExif()">
+      <label>
+        Camera brand:
+        <input name="cam_brand" placeholder="e.g. Leica, Sony, Canon">
+      </label>
+      <label>
+        Camera model:
+        <input name="cam_model" placeholder="e.g. M6, A7R IV, F3">
+      </label>
+      <label>
+        Film stock:
+        <input name="film" placeholder="e.g. Kodak Portra 400">
+      </label>
+      <label>
+        Film ISO:
+        <input type="number" name="iso" placeholder="e.g. 400">
+      </label>
+      <label>
+        Date taken:
+        <input type="date" name="date_taken">
+      </label>
+      <label>
+        Photos:
+        <input type="file" multiple name="photos" accept="image/*">
+      </label>
+      <button type="submit">Fix EXIF</button>
+    </form>
+    <ul id="results"></ul>
+  </body>
+</html>

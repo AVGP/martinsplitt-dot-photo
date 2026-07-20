@@ -1,0 +1,56 @@
+---
+layout: base.njk
+title: "Martin Splitt Photography — Portfolio"
+---
+
+<div class="portfolio-hero">
+  <h1>Portfolio</h1>
+  <p>Exploring the intersections of light, land, sky, and sea through fine art photography.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Work</button>
+  <button class="filter-btn" data-filter="Night">Night</button>
+  <button class="filter-btn" data-filter="Aerial">Aerial</button>
+  <button class="filter-btn" data-filter="Underwater">Underwater</button>
+  <button class="filter-btn" data-filter="Landscape">Landscape</button>
+  <button class="filter-btn" data-filter="Architecture">Architecture</button>
+</div>
+
+<div class="photo-grid" id="portfolio-grid">
+  {% for photoItem in collections.photos %}
+  <a href="{{ photoItem.url }}" class="photo-card" data-category="{{ photoItem.data.category }}">
+    <img src="{{ photoItem.data.photo }}" alt="{{ photoItem.data.title }}" loading="lazy">
+    <div class="photo-card-overlay">
+      <span class="photo-category-badge">{{ photoItem.data.category }}</span>
+      <h2 class="photo-title">{{ photoItem.data.title }}</h2>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const photoCards = document.querySelectorAll('.photo-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        photoCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

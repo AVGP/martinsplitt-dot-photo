@@ -1,0 +1,106 @@
+---
+layout: base.njk
+---
+<div class="detail-container">
+  <a href="/" class="back-link">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Back to Portfolio
+  </a>
+
+  <div class="photo-stage">
+    <img src="{{ photo }}" alt="{{ title }}" loading="eager">
+  </div>
+
+  <div class="photo-meta-grid">
+    <div class="photo-description-section">
+      <span class="photo-category-tag">{{ category }}</span>
+      <h1>{{ title }}</h1>
+      <div class="photo-markdown-body">
+        {{ content | safe }}
+      </div>
+    </div>
+
+    <aside class="exif-card">
+      <div class="exif-card-header">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+        Photo & Technical Specs
+      </div>
+
+      <div class="exif-list">
+        {% if exifData.make or exifData.model %}
+        <div class="exif-item">
+          <span class="exif-label">
+            Camera
+            {% if exifData.overrides.make or exifData.overrides.model %}
+            <span class="override-badge" title="Overridden in markdown metadata">Custom</span>
+            {% endif %}
+          </span>
+          <span class="exif-value">{{ exifData.make }} {{ exifData.model }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.film %}
+        <div class="exif-item">
+          <span class="exif-label">
+            Film Stock
+            <span class="override-badge" title="Overridden in markdown metadata">Custom</span>
+          </span>
+          <span class="exif-value">{{ exifData.film }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.lens %}
+        <div class="exif-item">
+          <span class="exif-label">Lens</span>
+          <span class="exif-value">{{ exifData.lens }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.focalLength %}
+        <div class="exif-item">
+          <span class="exif-label">Focal Length</span>
+          <span class="exif-value">{{ exifData.focalLength }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.aperture %}
+        <div class="exif-item">
+          <span class="exif-label">Aperture</span>
+          <span class="exif-value">{{ exifData.aperture }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.shutterSpeed %}
+        <div class="exif-item">
+          <span class="exif-label">Shutter Speed</span>
+          <span class="exif-value">{{ exifData.shutterSpeed }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.iso %}
+        <div class="exif-item">
+          <span class="exif-label">
+            ISO Speed
+            {% if exifData.overrides.iso %}
+            <span class="override-badge" title="Overridden in markdown metadata">Custom</span>
+            {% endif %}
+          </span>
+          <span class="exif-value">ISO {{ exifData.iso }}</span>
+        </div>
+        {% endif %}
+
+        {% if exifData.dateTaken %}
+        <div class="exif-item">
+          <span class="exif-label">Date Taken</span>
+          <span class="exif-value">{{ exifData.dateTaken }}</span>
+        </div>
+        {% endif %}
+
+        <div class="exif-item" style="margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-color);">
+          <span class="exif-label">Category</span>
+          <span class="exif-value">{{ category }}</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
